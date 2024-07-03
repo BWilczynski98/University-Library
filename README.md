@@ -23,7 +23,8 @@ A university library management application consisting of a backend created in P
 ```
 
 2. Create and activate a virtual environment:
-   _Unix/macOS_
+
+_Unix/macOS_
 
 ```bash
 python3 -m venv env
