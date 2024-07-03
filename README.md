@@ -1,4 +1,4 @@
-# University Library
+![University-Library](https://socialify.git.ci/BWilczynski98/University-Library/image?description=1&descriptionEditable=Library%20management%20system&font=Jost&name=1&pattern=Plus&theme=Auto)
 
 A university library management application consisting of a backend created in Python using FastAPI and a frontend based on Next.js.
 
