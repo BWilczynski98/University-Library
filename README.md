@@ -5,8 +5,9 @@ A university library management application consisting of a backend created in P
 ## Table of contents
 
 - [Requirements](#requirements)
-- [Installing and running Backend](#installing-and-running-Backend)
-- [Installing and running frontend](#installing-and-running-frontend)
+- [Installing and running Backend](#installing-and-running-backend)
+- [Installing and running Frontend](#installing-and-running-frontend)
+- [License](#license)
 
 # Requirements
 
@@ -50,7 +51,7 @@ pip install -r backend/requirements.txt
 uvicorn backend.main:app --reload
 ```
 
-## Installing and running frontend
+## Installing and running Frontend
 
 1. Go to the `frontend` directory:
 
@@ -69,3 +70,6 @@ yarn install
 ```bash
 yarn run dev
 ```
+# License
+
+This project is licensed under the terms of the [MIT](https://choosealicense.com/licenses/mit/) license
