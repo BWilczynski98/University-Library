@@ -28,19 +28,6 @@ backend/pytest.ini
 backend/tox.ini
 backend/.env
 
-# frontend (Next.js)
-frontend/node_modules/
-frontend/.next/
-frontend/.env.local
-frontend/.env.development.local
-frontend/.env.test.local
-frontend/.env.production.local
-frontend/.vercel/
-frontend/.swc/
-frontend/.turbo/
-frontend/.eslintcache
-frontend/coverage/
-
 # Ignore log files
 frontend/npm-debug.log*
 frontend/yarn-debug.log*
