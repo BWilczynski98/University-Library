@@ -1,42 +1,31 @@
-import crud
-from typing import List
-from fastapi import FastAPI, Depends
-from database import Base, engine, SessionLocal
-from sqlalchemy.orm import Session
-from schemas import Book as BookSchema, BookBase, Reader as ReaderSchema, ReaderBase
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+from api.routers import include_all_routers
+from db.database import Base, engine, SessionLocal
+
 
 app = FastAPI()
 Base.metadata.create_all(bind=engine)  # type: ignore
+include_all_routers(app)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],  # Adresy, które mają dostęp do API
+    allow_credentials=True,
+    allow_methods=["*"],  # Metody HTTP, które mają dostęp
+    allow_headers=["*"],  # Nagłówki, które mają dostęp
+)
 
 
-def get_database():
-    database = SessionLocal()
-    try:
-        yield database
-    finally:
-        database.close()
+@app.middleware("http")
+async def log_request(request, call_next):
+    print(f"Incoming request: {request.method} {request.url}")
+    response = await call_next(request)
+    print(f"Outgoing response: {response.status_code}")
+    return response
 
 
-@app.get("/books/", response_model=List[BookSchema])
-def read_books(
-    skip: int = 0, limit: int = 10, database: Session = Depends(get_database)
-):
-    books = crud.get_books(database, skip, limit)
-    return books
+# Uruchomienie aplikacji (tylko dla celów debugowania lokalnie)
+if __name__ == "__main__":
+    import uvicorn
 
-
-@app.post("/books/", response_model=BookSchema)
-def create_book(book: BookBase, database: Session = Depends(get_database)):
-    return crud.create_book(database, book)
-
-
-@app.get("/readers/", response_model=List[ReaderSchema])
-def read_readers(
-    skip: int = 0, limit: int = 10, database: Session = Depends(get_database)
-):
-    return crud.get_readers(database, skip, limit)
-
-
-@app.post("/readers/", response_model=ReaderSchema)
-def create_reader(reader: ReaderBase, database: Session = Depends(get_database)):
-    return crud.create_reader(database, reader)
+    uvicorn.run(app, host="127.0.0.1", port=8000, log_level="debug")
