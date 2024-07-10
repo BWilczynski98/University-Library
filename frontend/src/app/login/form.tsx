@@ -19,6 +19,7 @@ import { login } from "../auth/auth";
 
 export function LoginForm() {
   const [state, action] = useFormState(login, undefined);
+
   return (
     <Card className="max-w-sm">
       <CardHeader className="items-center">
@@ -33,6 +34,9 @@ export function LoginForm() {
       </CardHeader>
       <CardContent>
         <form action={action} className="space-y-6">
+          {state?.message && (
+            <p className="text-sm text-red-500 font-medium">{state.message}</p>
+          )}
           <div className="space-y-2">
             <Label>Email address</Label>
             <Input
