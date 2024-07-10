@@ -26,18 +26,19 @@ export async function signUp(
     };
   }
 
-  await axios
-    .post("http://127.0.0.1:8000/auth/registration", {
+  try {
+    const res = await axios.post("http://127.0.0.1:8000/auth/registration", {
       ...validatedFields.data,
       first_name: validatedFields.data.firstName,
       last_name: validatedFields.data.lastName,
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((e: Error | AxiosError) => {
-      return e.message;
     });
+  } catch (error: any) {
+    if (error.response && error.response.status > 400) {
+      return { message: "Something went wrong, try again in a little while." };
+    }
+  }
+
+  redirect("/login");
 }
 
 export async function login(
@@ -55,24 +56,25 @@ export async function login(
     };
   }
 
-  await axios({
-    method: "post",
-    url: "http://127.0.0.1:8000/auth/login",
-    headers: { "Content-Type": "multipart/formdata" },
-    data: formData,
-  })
-    .then((res) => {
-      cookies().set("accessToken", res.data.access_token, {
-        httpOnly: true,
-        maxAge: 24 * 60 * 60,
-        sameSite: "strict",
-      });
-      return res;
-    })
-    .catch((e: Error | AxiosError) => {
-      console.log(e.message);
-      return e;
+  try {
+    const res = await axios({
+      method: "post",
+      url: "http://127.0.0.1:8000/auth/login",
+      headers: { "Content-Type": "multipart/formdata" },
+      data: formData,
     });
+    cookies().set("accessToken", res.data.access_token, {
+      httpOnly: true,
+      maxAge: 24 * 60 * 60,
+      sameSite: "strict",
+    });
+  } catch (error: any) {
+    if (error.response && error.response.status == 401) {
+      return { message: "The email address or password is incorrect." };
+    } else {
+      return { message: "Something went wrong, try again in a little while." };
+    }
+  }
 
   redirect("/dashboard");
 }
