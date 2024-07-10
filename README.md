@@ -38,16 +38,22 @@ python -m venv env
 .\env\Scripts\activate
 ```
 
-3. Install the dependencies from the `requirements.txt` file:
+3. Go to the `backend` directory:
 
 ```bash
-pip install -r backend/requirements.txt
+cd backend
 ```
 
-4. Start the FastAPI server:
+4. Install the dependencies from the `requirements.txt` file:
 
 ```bash
-uvicorn backend.main:app --reload
+pip install -r requirements.txt
+```
+
+5. Start the FastAPI server:
+
+```bash
+uvicorn main:app --reload
 ```
 
 ## Installing and running frontend
