@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import { ListOfBooks } from "@/components/lists/list-of-books";
 import { SearchBar } from "@/components/ui/search-bar";
 
@@ -96,3 +97,17 @@ export default function DashboardPage() {
     </>
   );
 }
+=======
+import { Button } from "@/components/ui/button";
+import { logout } from "../auth/auth";
+
+export default function DashboardPage() {
+  return (
+    <main>
+      <form action={logout}>
+        <Button type="submit">Logout</Button>
+      </form>
+    </main>
+  );
+}
+>>>>>>> dev
